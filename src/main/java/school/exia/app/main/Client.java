@@ -14,12 +14,6 @@ public class Client extends Application {
     private static View view;
 
     public static void main(String[] args) {
-/*        int port = 2048;
-        try {
-            Socket test = new Socket("127.0.0.1",port);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
         ClientModel model = new ClientModel();
         SocketController controller = new SocketController(model);
         view = new View(controller);

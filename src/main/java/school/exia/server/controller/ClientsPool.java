@@ -13,14 +13,17 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class ClientsPool {
     private ServerSocket serverSocket;
     private Thread poolThread;
-    private SocketController controller;
+    private ServerController controller;
+
     private final ThreadPoolExecutor executor;
+
     public boolean isRunning = true;
     public List<ClientThread> clientsList;
 
-    public ClientsPool(ServerSocket serverSocket, SocketController controller) {
+    public ClientsPool(ServerSocket serverSocket, ServerController controller) {
         this.serverSocket = serverSocket;
         this.controller = controller;
+
         clientsList = new ArrayList<>();
         executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
     }
@@ -30,14 +33,9 @@ public class ClientsPool {
             while (isRunning) {
                 Socket socketClient;
                 ClientThread threadClient = null;
-
                 try {
-                    socketClient = serverSocket.accept();;
-                    executor.execute(new ClientThread(socketClient, controller));
-
-                    System.out.println(executor.getActiveCount());
-
-                    System.out.println("Nouvelle connexion");
+                    socketClient = serverSocket.accept();
+                    addClient(socketClient);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -45,5 +43,16 @@ public class ClientsPool {
         });
 
         poolThread.start();
+    }
+
+    public void addClient(Socket socketClient) {
+        ClientThread clientThread = new ClientThread(socketClient, controller, this);
+        clientsList.add(clientThread);
+        executor.execute(clientThread);
+        System.out.println("New connection: " + clientsList.size() + " users");
+    }
+
+    public ThreadPoolExecutor getExecutor() {
+        return executor;
     }
 }

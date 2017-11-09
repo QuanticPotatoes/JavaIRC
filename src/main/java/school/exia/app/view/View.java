@@ -1,15 +1,21 @@
 package school.exia.app.view;
 
+import com.jfoenix.controls.JFXListView;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import school.exia.app.controller.SocketController;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -19,6 +25,8 @@ public class View extends Application implements Observer {
 
     @FXML
     public TextField testInput;
+    @FXML
+    public ListView<String> listView;
 
     public View(SocketController controller) {
         this.controller = controller;
@@ -35,6 +43,7 @@ public class View extends Application implements Observer {
         stage.show();
         stage.setOnCloseRequest(e -> {
             try {
+                controller.stop();
                 stop();
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -46,12 +55,15 @@ public class View extends Application implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        ArrayList<String> list = (ArrayList<String>) arg;
+        ObservableList<String> items = FXCollections.observableArrayList(list);
+        Platform.runLater(() -> {
+            listView.setItems(items);
+        });
     }
 
     @FXML
     public void sendClick() {
-        System.out.println(testInput.getText());
         controller.send(testInput.getText());
     }
 }
