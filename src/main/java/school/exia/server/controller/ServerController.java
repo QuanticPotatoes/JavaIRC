@@ -24,4 +24,7 @@ public class ServerController {
     public void start() {
         pool.open();
     }
+
+    public void saveReceive(String s) {
+    }
 }

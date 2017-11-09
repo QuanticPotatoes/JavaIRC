@@ -2,6 +2,8 @@ package school.exia.app.main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import school.exia.app.controller.SocketController;
+import school.exia.app.model.ClientModel;
 import school.exia.app.view.View;
 
 import java.io.IOException;
@@ -18,7 +20,11 @@ public class Client extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-        view = new View();
+        ClientModel model = new ClientModel();
+        SocketController controller = new SocketController(model);
+        view = new View(controller);
+        model.addObserver(view);
+        controller.start();
         launch(args);
     }
 
