@@ -50,6 +50,7 @@ public class ClientsPool {
         clientsList.add(clientThread);
         executor.execute(clientThread);
         System.out.println("New connection: " + clientsList.size() + " users");
+        controller.logConnection(socketClient);
     }
 
     public ThreadPoolExecutor getExecutor() {

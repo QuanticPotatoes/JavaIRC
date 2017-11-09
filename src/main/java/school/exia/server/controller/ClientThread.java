@@ -52,6 +52,13 @@ public class ClientThread implements Runnable {
 
         System.out.println("user " + pool.clientsList.indexOf(this) + " was disconnected");
 
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        controller.logConnection(socket);
         pool.clientsList.remove(this);
     }
 

@@ -49,8 +49,6 @@ public class View extends Application implements Observer {
                 e1.printStackTrace();
             }
         });
-
-
     }
 
     @Override
@@ -65,5 +63,6 @@ public class View extends Application implements Observer {
     @FXML
     public void sendClick() {
         controller.send(testInput.getText());
+        testInput.clear();
     }
 }
