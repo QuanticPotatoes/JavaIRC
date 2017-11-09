@@ -1,8 +1,6 @@
 package school.exia.app.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Observable;
 
 public class ClientModel extends Observable {
