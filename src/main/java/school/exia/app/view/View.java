@@ -12,6 +12,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import school.exia.app.controller.SocketController;
 import school.exia.server.controller.Order;
@@ -77,5 +79,12 @@ public class View extends Application implements Observer {
     @FXML
     public void sendServerIP() {
         controller.start(serverInput.getText(), pseudoInput.getText());
+    }
+
+    @FXML
+    public void onKeyPress(KeyEvent e) {
+        if(e.getCode().equals(KeyCode.ENTER)) {
+            sendClick();
+        }
     }
 }

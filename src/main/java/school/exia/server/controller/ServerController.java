@@ -26,7 +26,7 @@ public class ServerController implements Cypher {
         this.model = model;
 
         try {
-            serverSocket = new ServerSocket(port,100, InetAddress.getByName("127.0.0.1"));
+            serverSocket = new ServerSocket(port,100, InetAddress.getByName("10.154.128.180"));
         } catch (IOException e) {
             e.printStackTrace();
         }

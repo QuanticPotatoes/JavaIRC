@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="testInput" layoutX="30.0" layoutY="360.0" prefHeight="26.0" prefWidth="423.0" />
+      <TextField fx:id="testInput" layoutX="30.0" layoutY="360.0" onKeyPressed="#onKeyPress" prefHeight="26.0" prefWidth="423.0" />
       <ListView fx:id="listView" layoutX="30.0" layoutY="46.0" prefHeight="299.0" prefWidth="423.0" />
       <JFXButton layoutX="462.0" layoutY="361.0" onMouseClicked="#sendClick" text="Envoyer" />
       <JFXTextField fx:id="serverInput" layoutX="462.0" layoutY="67.0" prefHeight="25.0" prefWidth="126.0" />
