@@ -11,8 +11,8 @@ public class ClientModel extends Observable {
         messageList = new ArrayList<>();
     }
 
-    public void saveMessage(String message, String date) {
-        messageList.add("[" +date + "] -> " + message);
+    public void saveMessage(String message, String date, String name) {
+        messageList.add("[" + date + " " + name + "] -> " + message);
         this.setChanged();
         notifyObservers(messageList);
     }

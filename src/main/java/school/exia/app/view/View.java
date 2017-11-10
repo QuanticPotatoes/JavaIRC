@@ -1,6 +1,7 @@
 package school.exia.app.view;
 
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextField;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import school.exia.app.controller.SocketController;
+import school.exia.server.controller.Order;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -27,6 +29,10 @@ public class View extends Application implements Observer {
     public TextField testInput;
     @FXML
     public ListView<String> listView;
+    @FXML
+    public JFXTextField serverInput;
+    @FXML
+    public JFXTextField pseudoInput;
 
     public View(SocketController controller) {
         this.controller = controller;
@@ -55,14 +61,21 @@ public class View extends Application implements Observer {
     public void update(Observable o, Object arg) {
         ArrayList<String> list = (ArrayList<String>) arg;
         ObservableList<String> items = FXCollections.observableArrayList(list);
-        Platform.runLater(() -> {
-            listView.setItems(items);
-        });
+        Platform.runLater(() -> listView.setItems(items));
     }
 
     @FXML
     public void sendClick() {
-        controller.send(testInput.getText());
+
+        if(testInput.getText().length() == 0) {
+            return;
+        }
+        controller.send(Order.PUT, testInput.getText());
         testInput.clear();
+    }
+
+    @FXML
+    public void sendServerIP() {
+        controller.start(serverInput.getText(), pseudoInput.getText());
     }
 }

@@ -14,11 +14,14 @@ public class Client extends Application {
     private static View view;
 
     public static void main(String[] args) {
+        start(args);
+    }
+
+    public static void start(String[] args) {
         ClientModel model = new ClientModel();
         SocketController controller = new SocketController(model);
         view = new View(controller);
         model.addObserver(view);
-        controller.start();
         launch(args);
     }
 

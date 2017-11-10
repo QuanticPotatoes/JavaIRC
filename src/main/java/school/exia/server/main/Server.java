@@ -10,6 +10,10 @@ public class Server
 {
     public static void main( String[] args )
     {
+        start();
+    }
+
+    public static void start() {
         int port = 2048;
         ServerModel model = new ServerModel();
         ServerController controller = new ServerController(port, model);

@@ -3,11 +3,13 @@ package school.exia.server.controller;
 
 import org.json.JSONObject;
 import school.exia.app.controller.SocketController;
+import school.exia.main.Cypher;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 
 public class ClientThread implements Runnable {
@@ -17,6 +19,7 @@ public class ClientThread implements Runnable {
     private BufferedReader reader;
     private ServerController controller;
     private ClientsPool pool;
+    public String name;
 
     public ClientThread(Socket socket, ServerController controller, ClientsPool pool) {
         this.socket = socket;
@@ -31,12 +34,16 @@ public class ClientThread implements Runnable {
         }
     }
 
+    /**
+     * ReadListener
+     */
     public void run() {
 
         String s = null;
 
         while(true) {
             try {
+                /* waiting receive information from socket */
                 s = reader.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -46,7 +53,7 @@ public class ClientThread implements Runnable {
                 break;
             }
 
-            controller.saveReceive(s);
+            controller.saveReceive(s, this);
             System.out.println(s);
         }
 
@@ -62,11 +69,12 @@ public class ClientThread implements Runnable {
         pool.clientsList.remove(this);
     }
 
-    public void send(Order order, String message, String date) {
+    public void send(Order order, String message, String date, String name) {
         JSONObject json = new JSONObject();
         json.put("order", order);
         json.put("message", message);
         json.put("date", date);
+        json.put("name", name);
         writer.println(json.toString());
     }
 }
