@@ -17,7 +17,7 @@ public class SocketController implements Cypher {
     private BufferedReader reader;
     private JSONObject json;
     private Thread readListener;
-    private boolean isRunning = true;
+    private boolean isRunning = false;
 
     public SocketController(ClientModel model) {
         this.model = model;
@@ -25,6 +25,13 @@ public class SocketController implements Cypher {
     }
 
     public void start(String ip, String pseudo) {
+
+        if(isRunning) {
+            return;
+        }
+
+        isRunning = true;
+
         try {
             socket = new Socket(ip,2048);
             writer = new PrintWriter(socket.getOutputStream(), true);
